@@ -6,6 +6,8 @@ function App() {
   const canvasRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState("");
+  const [isCapturing, setIsCapturing] = useState(false);
+  
 
   useEffect(() => {
     navigator.mediaDevices
@@ -21,15 +23,24 @@ function App() {
   }, []);
 
   const captureImage = async () => {
+    // If a capture is already in progress, exit the function
+    if (isCapturing) {
+      return;
+    }
+
+    // Set the flag to indicate a capture is in progress
+    setIsCapturing(true);
+
     setIsLoading(true);
     const context = canvasRef.current.getContext("2d");
     context.drawImage(videoRef.current, 0, 0, 640, 480);
+
     canvasRef.current.toBlob(async (blob) => {
       const formData = new FormData();
       formData.append("file", blob, "image.jpg");
 
       try {
-        const response = await fetch("http://localhost:8000/analyze", {
+        const response = await fetch("https://eat-or-not-container-3metrifzyq-lz.a.run.app/analyze", {
           method: "POST",
           body: formData,
         });
@@ -55,7 +66,7 @@ function App() {
       <p>Take a photo of the product label</p>
       <video id="video" width="640" height="480" ref={videoRef}></video>
       <canvas id="canvas" width="640" height="480" ref={canvasRef} style={{ display: "none" }}></canvas>
-      <button onClick={captureImage}>Capture</button>
+      <button onClick={captureImage} disabled={isCapturing}>Capture</button>
       {isLoading ? <p>Analysing...</p> : <p>{result}</p>}
     </div>
   );

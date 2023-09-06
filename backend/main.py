@@ -1,12 +1,14 @@
 import os
+import logging
 from dotenv import load_dotenv
 from google.cloud import vision
 from google.oauth2.service_account import Credentials
-import io
 import openai
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+
+logging.basicConfig(level=logging.INFO)
 
 app = FastAPI()
 
@@ -51,8 +53,15 @@ gcp_config = {
     "client_x509_cert_url": GCP_CLIENT_X509_CERT_URL,
 }
 
+
+logging.info("Initializing Google Vision client...")  # Logging added here
+
 # Initialize the Google Vision client
-client = vision.ImageAnnotatorClient(credentials=Credentials.from_service_account_info(gcp_config))
+try:
+    client = vision.ImageAnnotatorClient(credentials=Credentials.from_service_account_info(gcp_config))
+    logging.info("Google Vision client initialized.")  # Logging added here
+except Exception as e:
+    logging.error(f"Failed to initialize Google Vision client: {e}")  # Logging added here
 
 def detect_text(content):
     """
@@ -120,3 +129,8 @@ def analyze(file: UploadFile = File(...)):
             return JSONResponse(content={"error": "No text found"}, status_code=400)
     except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=500)
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("main:app", host="0.0.0.0", port=8080, reload=True)
+
