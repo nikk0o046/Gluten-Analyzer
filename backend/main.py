@@ -14,7 +14,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # You should restrict this in production
+    allow_origins=["*"], # should be restricted in production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -54,19 +54,17 @@ gcp_config = {
 }
 
 
-logging.info("Initializing Google Vision client...")  # Logging added here
+logging.info("Initializing Google Vision client...")
 
 # Initialize the Google Vision client
 try:
     client = vision.ImageAnnotatorClient(credentials=Credentials.from_service_account_info(gcp_config))
-    logging.info("Google Vision client initialized.")  # Logging added here
+    logging.info("Google Vision client initialized.")
 except Exception as e:
-    logging.error(f"Failed to initialize Google Vision client: {e}")  # Logging added here
+    logging.error(f"Failed to initialize Google Vision client: {e}")
 
 def detect_text(content):
-    """
-    Detects text in the provided image content.
-    """
+    # Detects text in the provided image
     image = vision.Image(content=content)
 
     # Perform text detection
