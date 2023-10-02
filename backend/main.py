@@ -39,6 +39,8 @@ GCP_CLIENT_X509_CERT_URL = os.getenv("GCP_CLIENT_X509_CERT_URL")
 # Reformat the PRIVATE_KEY for the credential json
 GCP_PRIVATE_KEY = GCP_PRIVATE_KEY.replace('\\n', '\n')
 
+logging.debug("Creating key dictionary")
+
 # Create a dictionary to mimic the JSON key file
 gcp_config = {
     "type": GCP_TYPE,
@@ -64,12 +66,15 @@ except Exception as e:
     logging.error(f"Failed to initialize Google Vision client: {e}")
 
 def detect_text(content):
+    logging.debug("Starting detect_text")
     # Detects text in the provided image
     image = vision.Image(content=content)
 
     # Perform text detection
     response = client.text_detection(image=image)
     texts = response.text_annotations
+
+    logging.info("Detected text: %s", texts[0].description)
 
     # Check if any text was detected
     if texts:
@@ -79,6 +84,7 @@ def detect_text(content):
 
 
 def ask_GPT(input_text):
+    logging
     system_template = """You are a tool for people who are sensitive to gluten. You are provided a text, extracted from an image taken from a label of a product. This can be in any language. Your job is to analyse that text.
 
 Begin by checking, if the text explicitly mentions gluten, e.g. "gluten-free" or "could contain traces of gluten". Then, proceed to analysing ingredients, one by one. Identify ingredients that are very likely to contain gluten, e.g. "wheat" and ingredients that are often at risk at containing gluten.
@@ -107,6 +113,7 @@ Your answer should only contain the response as defined above. Keep it as brief 
       messages=message_list,
     )
     response_content = response.choices[0].message['content']
+    logging.info("OpenAI response content: %s", response_content)
 
     return response_content
 
@@ -130,5 +137,6 @@ def analyze(file: UploadFile = File(...)):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8080, reload=True)
+    port = int(os.environ.get("PORT", 8080))
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=False)
 
