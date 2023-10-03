@@ -40,7 +40,7 @@ function App() {
       formData.append("file", blob, "image.jpg");
 
       try {
-        const response = await fetch("http://16.170.254.29:8080/analyze/", {
+        const response = await fetch("https://eat-or-not-container-3metrifzyq-lz.a.run.app/analyze/", {
           method: "POST",
           body: formData,
         });
