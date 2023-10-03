@@ -7,6 +7,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState("");
   const [isCapturing, setIsCapturing] = useState(false);
+  const [showResult, setShowResult] = useState(false);
   
 
   useEffect(() => {
@@ -56,6 +57,8 @@ function App() {
       }
       finally {
         setIsLoading(false);
+        setIsCapturing(false);
+        setShowResult(true)
       }
     });
   };
@@ -64,10 +67,20 @@ function App() {
     <div>
       <h1>Gluten Analyzer</h1>
       <p>Take a photo of the product label</p>
+      <button onClick={captureImage} disabled={isCapturing}>Capture</button>
       <video id="video" width="640" height="480" ref={videoRef}></video>
       <canvas id="canvas" width="640" height="480" ref={canvasRef} style={{ display: "none" }}></canvas>
-      <button onClick={captureImage} disabled={isCapturing}>Capture</button>
-      {isLoading ? <p>Analysing...</p> : <p>{result}</p>}
+      {isLoading && (
+        <div className="overlay">
+          <p>Analysing...</p>
+        </div>
+      )}
+      {showResult && (
+        <div className="overlay">
+          <p className="result-background">{result}</p>
+          <button onClick={() => setShowResult(false)}>Continue Scanning</button>
+        </div>
+      )}
     </div>
   );
 }
