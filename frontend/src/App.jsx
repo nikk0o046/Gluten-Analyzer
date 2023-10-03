@@ -72,7 +72,7 @@ function App() {
       <canvas id="canvas" width="640" height="480" ref={canvasRef} style={{ display: "none" }}></canvas>
       {isLoading && (
         <div className="overlay">
-          <p>Analysing...</p>
+          <p className="result-background">Analysing...</p>
         </div>
       )}
       {showResult && (
