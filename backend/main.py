@@ -39,7 +39,7 @@ GCP_CLIENT_X509_CERT_URL = os.getenv("GCP_CLIENT_X509_CERT_URL")
 # Reformat the PRIVATE_KEY for the credential json
 GCP_PRIVATE_KEY = GCP_PRIVATE_KEY.replace('\\n', '\n')
 
-logging.debug("Creating key dictionary")
+logging.info("Creating key dictionary")
 
 # Create a dictionary to mimic the JSON key file
 gcp_config = {
@@ -66,7 +66,7 @@ except Exception as e:
     logging.error(f"Failed to initialize Google Vision client: {e}")
 
 def detect_text(content):
-    logging.debug("Starting detect_text")
+    logging.info("Starting detect_text")
     # Detects text in the provided image
     image = vision.Image(content=content)
 
