@@ -84,7 +84,7 @@ def detect_text(content):
 
 
 def ask_GPT(input_text):
-    logging
+    logging.info("Starting text analysis.")
     system_template = """You are a tool for people who are sensitive to gluten. You are provided a text, extracted from an image taken from a label of a product. This can be in any language. Your job is to analyse that text.
 
 Begin by checking, if the text explicitly mentions gluten, e.g. "gluten-free" or "could contain traces of gluten". Then, proceed to analysing ingredients, one by one. Identify ingredients that are very likely to contain gluten, e.g. "wheat" and ingredients that are often at risk at containing gluten.
