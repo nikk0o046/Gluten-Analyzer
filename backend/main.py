@@ -14,7 +14,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # should be restricted in production
+    allow_origins=["https://nikk0o046.github.io"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
