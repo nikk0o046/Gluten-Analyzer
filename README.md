@@ -85,13 +85,11 @@ docker build -t gluten-analyzer-backend .
 
 Refer to [Google Cloud Run's documentation](https://cloud.google.com/run/docs) for deployment steps.
 
-## Contributing:
-
-If you find any bugs or have feature suggestions, please open an issue or submit a pull request.
 
 ## Contact:
 
-For collaboration or queries, reach out to nikk0o046@gmail.com
+Niko Virtanen
+niko.virtanen@alumni.aalto.fi
 
 ## License:
 
