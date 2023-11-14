@@ -29,18 +29,18 @@ Last time updated: 4th of October 2023
 
 Make sure to set up the `.env` file in your backend directory with the following:
 
-OPENAI_API_KEY=
-OPENAI_ORG_ID=
-GCP_TYPE=
-GCP_PROJECT_ID=
-GCP_PRIVATE_KEY_ID=
-GCP_PRIVATE_KEY=
-GCP_CLIENT_EMAIL=
-GCP_CLIENT_ID=
-GCP_AUTH_URI=
-GCP_TOKEN_URI=
-GCP_AUTH_PROVIDER_X509_CERT_URL=
-GCP_CLIENT_X509_CERT_URL=
+OPENAI_API_KEY=  
+OPENAI_ORG_ID=  
+GCP_TYPE=  
+GCP_PROJECT_ID=  
+GCP_PRIVATE_KEY_ID=  
+GCP_PRIVATE_KEY=  
+GCP_CLIENT_EMAIL=  
+GCP_CLIENT_ID=  
+GCP_AUTH_URI=  
+GCP_TOKEN_URI=  
+GCP_AUTH_PROVIDER_X509_CERT_URL=  
+GCP_CLIENT_X509_CERT_URL=  
 
 The first two you get from OpenAI and the rest are related to Google Service Account, which you should create to use Google's Vision API. Remember to keep these private and never push your .env file to public repositories.
 
